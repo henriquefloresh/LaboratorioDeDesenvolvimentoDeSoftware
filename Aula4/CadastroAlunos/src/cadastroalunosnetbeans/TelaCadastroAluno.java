@@ -8,15 +8,19 @@ import javax.swing.JOptionPane;
 
 public class TelaCadastroAluno extends javax.swing.JFrame {
 
+    // Lista em memória com todos os alunos cadastrados durante a execução
+    // (não é persistida em arquivo - some ao fechar o programa)
     private final ArrayList<Aluno> alunos = new ArrayList<>();
 
     public TelaCadastroAluno() {
         initComponents();
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(null); // centraliza a janela na tela
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
+    // ATENÇÃO: bloco gerado automaticamente pelo NetBeans (GUI Builder).
+    // Não editar manualmente - qualquer alteração aqui é sobrescrita pelo editor visual.
     private void initComponents() {
 
         lblTitulo = new javax.swing.JLabel();
@@ -219,12 +223,17 @@ public class TelaCadastroAluno extends javax.swing.JFrame {
     }
     // </editor-fold>
 
+    // Executado ao clicar em "Cadastrar Aluno": valida os campos, a data,
+    // a matrícula (numérica e única) e, se tudo estiver certo, cria o Aluno
+    // e adiciona na lista e na área de texto de resultados.
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {
         if (temCampoVazio()) {
             JOptionPane.showMessageDialog(this, "Preencha todos os campos.");
             return;
         }
 
+        // Valida se a data está no formato DD/MM/AAAA e é uma data real
+        // (ResolverStyle.STRICT rejeita, por exemplo, "31/02/2024")
         try {
             DateTimeFormatter formato = DateTimeFormatter
                     .ofPattern("dd/MM/uuuu")
@@ -236,6 +245,7 @@ public class TelaCadastroAluno extends javax.swing.JFrame {
             return;
         }
 
+        // Valida se a matrícula digitada é um número válido
         long matricula;
         try {
             matricula = Long.parseLong(txtMatricula.getText().trim());
@@ -245,6 +255,7 @@ public class TelaCadastroAluno extends javax.swing.JFrame {
             return;
         }
 
+        // Impede cadastrar duas vezes a mesma matrícula
         for (Aluno aluno : alunos) {
             if (aluno.getMatricula() == matricula) {
                 JOptionPane.showMessageDialog(this, "Essa matrícula já está cadastrada.");
@@ -253,6 +264,7 @@ public class TelaCadastroAluno extends javax.swing.JFrame {
             }
         }
 
+        // Todos os dados são válidos: monta o objeto Aluno com os valores dos campos
         Aluno aluno = new Aluno(
                 txtNome.getText().trim(),
                 txtNascimento.getText().trim(),
@@ -270,7 +282,7 @@ public class TelaCadastroAluno extends javax.swing.JFrame {
         );
 
         alunos.add(aluno);
-        txtAreaAlunos.append(aluno.toString() + System.lineSeparator());
+        txtAreaAlunos.append(aluno.toString() + System.lineSeparator()); // exibe o aluno na área de texto (usa o toString())
 
         JOptionPane.showMessageDialog(this, "Aluno cadastrado com sucesso!");
         limparCampos();
@@ -280,6 +292,8 @@ public class TelaCadastroAluno extends javax.swing.JFrame {
         limparCampos();
     }
 
+    // Verifica se algum campo obrigatório do formulário está vazio
+    // (os combos - sexo e estado - não entram aqui pois sempre têm um valor selecionado)
     private boolean temCampoVazio() {
         return txtNome.getText().trim().isEmpty()
                 || txtNascimento.getText().trim().isEmpty()
@@ -294,6 +308,8 @@ public class TelaCadastroAluno extends javax.swing.JFrame {
                 || txtTelefone.getText().trim().isEmpty();
     }
 
+    // Reseta o formulário para um novo cadastro: limpa os campos de texto,
+    // volta os combos para a primeira opção e devolve o foco ao campo Nome
     private void limparCampos() {
         txtNome.setText("");
         txtNascimento.setText("");

@@ -1,4 +1,3 @@
--- Ajuste conforme as tabelas que você criou em aula
 CREATE DATABASE IF NOT EXISTS escola;
 USE escola;
 

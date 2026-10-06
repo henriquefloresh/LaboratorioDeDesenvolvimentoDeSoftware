@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="escola" default="run" basedir=".">
+    <property file="nbproject/project.properties"/>
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+        <delete dir="${dist.dir}"/>
+    </target>
+    <target name="compile">
+        <mkdir dir="${build.classes.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${build.classes.dir}" encoding="${javac.encoding}" source="${javac.source}" target="${javac.target}" includeantruntime="false" debug="true">
+            <classpath><pathelement path="${javac.classpath}"/></classpath>
+        </javac>
+    </target>
+    <target name="run" depends="compile">
+        <java classname="${main.class}" fork="true">
+            <classpath>
+                <pathelement location="${build.classes.dir}"/>
+                <pathelement path="${javac.classpath}"/>
+            </classpath>
+        </java>
+    </target>
+</project>

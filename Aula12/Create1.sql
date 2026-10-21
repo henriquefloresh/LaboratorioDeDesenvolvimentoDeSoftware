@@ -83,3 +83,14 @@ select nome, curso from alunos;
 select nome, disciplina from professores;
 
 select * from pessoa;
+
+create table veiculo(
+	id int auto_increment primary key,
+    modelo varchar (30) not null,
+    placa varchar(7) not null,
+    id_pessoa int not null,
+    foreign key(id_pessoa) references pessoa(id)
+    );
+    
+show tables;
+desc veiculo
